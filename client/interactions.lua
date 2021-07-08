@@ -456,6 +456,18 @@ function GetCuffedAnimation(playerId)
 	Citizen.Wait(2500)
 end
 
+RegisterNetEvent('police:client:checkFines')
+AddEventHandler('police:client:checkFines', function()
+    local player, distance = GetClosestPlayer()
+    if player ~= -1 and distance < 2.5 then
+        local playerId = GetPlayerServerId(player)
+        TriggerServerEvent("police:server:checkFines", playerId)
+    else
+        QBCore.Functions.Notify("No one around!", "error")
+    end
+end)
+
+
 -- Citizen.CreateThread(function()
     -- local ped = PlayerPedId()
     -- ClearPedTasks(ped)
